@@ -3592,7 +3592,7 @@
         },
         {
           "type": "PREC_LEFT",
-          "value": 3,
+          "value": 1,
           "content": {
             "type": "SEQ",
             "members": [

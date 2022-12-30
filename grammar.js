@@ -1,7 +1,7 @@
 const precedence = {
   TYPE: 4,
-  LAZY: 3,
   CAST: 2,
+  LAZY: 1,
   ASSERT: 1,
 };
 const keywords = [ 
