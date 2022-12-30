@@ -50,12 +50,23 @@ module.exports = grammar({
     conflicts: $ => [
       [$._quote_op_left, $.symbolic_op],
       [$._quote_op_right, $.symbolic_op],
-      [$.expr],
-      [$.pat],
-      [$.record_pat],
-      [$.typar, $.atomic_pat],
-      [$.expr, $.rule],
-      [$.expr, $._expr_list],
+      [$.expr], // TODO: Check if needed.
+      [$.pat], // TODO: Check if needed.
+      [$.pat_param], // TODO: Check if needed.
+      [$.pat, $.pat_param], // TODO: Check if needed.
+      [$.record_pat], // TODO: Check if needed.
+      [$.typar, $.atomic_pat], // TODO: Check if needed.
+      [$.typar, $.static_typars], // TODO: Check if needed.
+      [$.typar_constraints], // TODO: Check if needed.
+      [$.expr, $.rule], // TODO: Check if needed.
+      [$.expr, $._expr_list], // TODO: Check if needed.
+      [$.expr, $.object_construction], // TODO: Check if needed.
+      [$.expr, $.field_initializer], // TODO: Check if needed.
+      [$.expr, $.slice_range], // TODO: Check if needed.
+      [$.expr, $.elif_branch], // TODO: Check if needed.
+      [$.expr, $.else_branch], // TODO: Check if needed.
+      [$.elif_branches], // TODO: Check if needed.
+      [$.atomic_type], // TODO: Check if needed.
     ],
     /**
      * an array of token names which can be returned by an external scanner. External scanners allow you to write custom C code which runs during the lexing process in order to handle lexical rules (e.g. Python’s indentation tokens) that cannot be described by regular expressions.
@@ -428,8 +439,11 @@ module.exports = grammar({
         seq($.typar, ':', 'equality'),
         seq($.typar, ':', 'comparison')),
       typar_defn: $ => seq( optional($.attributes), $.typar),
-      typar_defns: $ => seq(
-        '<', $.typar_defn, repeat(seq(',', $.typar_defn)), optional($.typar_constraints)),
+      typar_defns: $ => prec.left(
+        seq(
+          '<', $.typar_defn, repeat(seq(',', $.typar_defn)), optional($.typar_constraints)
+        )
+      ),
       typar_constraints: $ => seq(
         'when', $.constraint, repeat(seq('and', $.constraint))),
       static_typars: $ => choice(
@@ -721,9 +735,12 @@ module.exports = grammar({
       // TODO extend the tree-sitter DSL with 'one_or_more'
       pats: $ => seq($.pat, repeat(seq(',', $.pat))),
       field_pats: $ => seq($.field_pat, repeat(seq(';', $.field_pat))),
-      rules: $ => seq(
-        optional('|'), $.rule,
-        repeat(seq('|', $.rule))),
+      rules: $ => prec.right(
+        seq(
+          optional('|'), $.rule,
+          repeat(seq('|', $.rule))
+        )
+      ),
       // undefined as of yet
       member_defn: $ => "TODO",
       attributes: $ => "TODO",

@@ -265,21 +265,6 @@
     }
   },
   {
-    "type": "decimal",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "int",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "elif_branch",
     "named": true,
     "fields": {},
@@ -923,25 +908,6 @@
     }
   },
   {
-    "type": "nativeint",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "xint",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "object_construction",
     "named": true,
     "fields": {},
@@ -1312,26 +1278,6 @@
           "named": true
         },
         {
-          "type": "bignum",
-          "named": true
-        },
-        {
-          "type": "byte",
-          "named": true
-        },
-        {
-          "type": "bytearray",
-          "named": true
-        },
-        {
-          "type": "bytechar",
-          "named": true
-        },
-        {
-          "type": "char",
-          "named": true
-        },
-        {
           "type": "comment",
           "named": true
         },
@@ -1340,35 +1286,7 @@
           "named": true
         },
         {
-          "type": "decimal",
-          "named": true
-        },
-        {
-          "type": "ident",
-          "named": true
-        },
-        {
-          "type": "ieee32",
-          "named": true
-        },
-        {
-          "type": "ieee64",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "int16",
-          "named": true
-        },
-        {
-          "type": "int32",
-          "named": true
-        },
-        {
-          "type": "int64",
+          "type": "expr",
           "named": true
         },
         {
@@ -1380,55 +1298,11 @@
           "named": true
         },
         {
-          "type": "nativeint",
-          "named": true
-        },
-        {
-          "type": "sbyte",
-          "named": true
-        },
-        {
           "type": "shebang",
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
           "type": "symbolic_op",
-          "named": true
-        },
-        {
-          "type": "triple_quoted_string",
-          "named": true
-        },
-        {
-          "type": "uint16",
-          "named": true
-        },
-        {
-          "type": "uint32",
-          "named": true
-        },
-        {
-          "type": "uint64",
-          "named": true
-        },
-        {
-          "type": "unativeint",
-          "named": true
-        },
-        {
-          "type": "verbatim_bytearray",
-          "named": true
-        },
-        {
-          "type": "verbatim_string",
-          "named": true
-        },
-        {
-          "type": "xint",
           "named": true
         }
       ]
@@ -1608,25 +1482,6 @@
   },
   {
     "type": "uint64",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "xint",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "unativeint",
     "named": true,
     "fields": {},
     "children": {

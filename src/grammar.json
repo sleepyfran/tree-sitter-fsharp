@@ -3085,45 +3085,49 @@
       ]
     },
     "typar_defns": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "<"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "typar_defn"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "<"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "typar_defn"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "typar_defn"
+                }
+              ]
+            }
+          },
+          {
+            "type": "CHOICE",
             "members": [
               {
-                "type": "STRING",
-                "value": ","
+                "type": "SYMBOL",
+                "name": "typar_constraints"
               },
               {
-                "type": "SYMBOL",
-                "name": "typar_defn"
+                "type": "BLANK"
               }
             ]
           }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "typar_constraints"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+        ]
+      }
     },
     "typar_constraints": {
       "type": "SEQ",
@@ -6020,41 +6024,45 @@
       ]
     },
     "rules": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "|"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "rule"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
             "members": [
               {
                 "type": "STRING",
                 "value": "|"
               },
               {
-                "type": "SYMBOL",
-                "name": "rule"
+                "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "rule"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rule"
+                }
+              ]
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "member_defn": {
       "type": "STRING",
@@ -6091,11 +6099,25 @@
       "pat"
     ],
     [
+      "pat_param"
+    ],
+    [
+      "pat",
+      "pat_param"
+    ],
+    [
       "record_pat"
     ],
     [
       "typar",
       "atomic_pat"
+    ],
+    [
+      "typar",
+      "static_typars"
+    ],
+    [
+      "typar_constraints"
     ],
     [
       "expr",
@@ -6104,6 +6126,32 @@
     [
       "expr",
       "_expr_list"
+    ],
+    [
+      "expr",
+      "object_construction"
+    ],
+    [
+      "expr",
+      "field_initializer"
+    ],
+    [
+      "expr",
+      "slice_range"
+    ],
+    [
+      "expr",
+      "elif_branch"
+    ],
+    [
+      "expr",
+      "else_branch"
+    ],
+    [
+      "elif_branches"
+    ],
+    [
+      "atomic_type"
     ]
   ],
   "precedences": [],
