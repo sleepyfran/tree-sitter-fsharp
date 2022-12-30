@@ -5,3 +5,5 @@ build
 parser.exp
 parser.lib
 parser.obj
+log.html
+.DS_Store
