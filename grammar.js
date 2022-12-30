@@ -1,3 +1,8 @@
+const precedence = {
+  LAZY: 3,
+  CAST: 2,
+  ASSERT: 1,
+};
 const keywords = [ 
   'abstract', 'and', 'as', 'assert', 'base', 'begin', 'class', 'default', 
   'delegate', 'do', 'done', 'downcast', 'downto', 'elif', 'else', 'end',
@@ -459,7 +464,7 @@ module.exports = grammar({
         // array expression
         seq('[|', optional($._expr_list), '|]'),
         // delayed expression
-        seq('lazy', $.expr),
+        prec.left(precedence.LAZY, seq('lazy', $.expr)),
         // the "null" value for a reference type
         'null',
         // type annotation
@@ -471,9 +476,9 @@ module.exports = grammar({
         // dynamic downcast coercion
         seq($.expr, ':?>', $.type),
         // static upcast expression
-        seq('upcast', $.expr),
+        prec.right(precedence.CAST, seq('upcast', $.expr)),
         // dynamic downcast expression
-        seq('downcast', $.expr),
+        prec.right(precedence.CAST, seq('downcast', $.expr)),
         // function definition expression
         seq('let', $.function_defn, 'in', $.expr),
         // value definition expression
@@ -507,7 +512,7 @@ module.exports = grammar({
         //enumerablefor loop
         seq('for', $.pat, 'in', $.expr_or_range_expr, 'do', $.expr, 'done' ),
         //assert expression
-        seq('assert', $.expr),
+        prec.left(precedence.ASSERT, seq('assert', $.expr)),
         //quoted expression
         seq('<@', $.expr, '@>'),
         //quoted expression
