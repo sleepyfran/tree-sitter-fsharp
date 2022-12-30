@@ -6096,6 +6096,14 @@
     [
       "typar",
       "atomic_pat"
+    ],
+    [
+      "expr",
+      "rule"
+    ],
+    [
+      "expr",
+      "_expr_list"
     ]
   ],
   "precedences": [],
