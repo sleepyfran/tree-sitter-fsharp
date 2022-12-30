@@ -520,9 +520,9 @@ module.exports = grammar({
         //quoted expression
         seq('<@@', $.expr, '@@>'),
         //expression splice
-        seq('%', $.expr),
+        prec.left(seq('%', $.expr)),
         //weakly typed expression splice
-        seq('%%', $.expr),
+        prec.left(seq('%%', $.expr)),
         //static member invocation
         seq('(', $.static_typars, ':', '(', $.member_sig, ')', $.expr, ')')),
       _expr_list: $ => seq($.expr, repeat(seq(choice(';', '\n'), $.expr))),
