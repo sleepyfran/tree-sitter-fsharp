@@ -1,5 +1,6 @@
 const precedence = {
-  PREFIX_OP: 5,
+  PREFIX_OP: 6,
+  PAT: 5,
   TYPE: 4,
   CAST: 2,
   LAZY: 1,
@@ -50,6 +51,7 @@ module.exports = grammar({
       [$._quote_op_left, $.symbolic_op],
       [$._quote_op_right, $.symbolic_op],
       [$.expr],
+      [$.pat],
     ],
     /**
      * an array of token names which can be returned by an external scanner. External scanners allow you to write custom C code which runs during the lexing process in order to handle lexical rules (e.g. Python’s indentation tokens) that cannot be described by regular expressions.
@@ -647,41 +649,44 @@ module.exports = grammar({
       // 7. Patterns
       rule: $ => seq($.pat, optional($.pattern_guard), '->', $.expr),
       pattern_guard: $ => seq('when', $.expr),
-      pat: $ => choice(
-        // constant pattern
-        $.konst, 
-        // named pattern
-        seq($.long_ident, optional($.pat_param), optional($.pat)),
-        // wildcard pattern
-        '_',
-        // "as" pattern
-        seq($.pat, 'as', $.ident),
-        // disjunctive pattern
-        seq($.pat, '|', $.pat),
-        // conjunctive pattern
-        seq($.pat, '&', $.pat),
-        // "cons" pattern
-        seq($.pat, '::', $.pat),
-        // pattern with type constraint
-        seq($.pat, ':', $.type),
-        // tuple pattern
-        seq($.pat, repeat1(seq(',', $.pat))),
-        // parenthesized pattern
-        seq('(', $.pat, ')'),
-        // list pattern
-        $.list_pat,
-        // array pattern
-        $.array_pat,
-        // record pattern
-        $.record_pat,
-        // dynamic type test pattern
-        seq(':?', $.atomic_type),
-        // dynamic type test pattern
-        seq(':?', $.atomic_type, 'as', $.ident),
-        // null_test pattern
-        'null',
-        // pattern with attributes
-        seq($.attributes, $.pat)
+      pat: $ => prec(
+        precedence.PAT,
+        choice(
+          // constant pattern
+          $.konst,
+          // named pattern
+          seq($.long_ident, optional($.pat_param), optional($.pat)),
+          // wildcard pattern
+          '_',
+          // "as" pattern
+          seq($.pat, 'as', $.ident),
+          // disjunctive pattern
+          seq($.pat, '|', $.pat),
+          // conjunctive pattern
+          seq($.pat, '&', $.pat),
+          // "cons" pattern
+          seq($.pat, '::', $.pat),
+          // pattern with type constraint
+          seq($.pat, ':', $.type),
+          // tuple pattern
+          seq($.pat, repeat1(seq(',', $.pat))),
+          // parenthesized pattern
+          seq('(', $.pat, ')'),
+          // list pattern
+          $.list_pat,
+          // array pattern
+          $.array_pat,
+          // record pattern
+          $.record_pat,
+          // dynamic type test pattern
+          seq(':?', $.atomic_type),
+          // dynamic type test pattern
+          seq(':?', $.atomic_type, 'as', $.ident),
+          // null_test pattern
+          'null',
+          // pattern with attributes
+          seq($.attributes, $.pat)
+        )
       ),
       list_pat: $ => choice(
         seq('[', ']'),
