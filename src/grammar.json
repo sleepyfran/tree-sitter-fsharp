@@ -6092,6 +6092,10 @@
     ],
     [
       "record_pat"
+    ],
+    [
+      "typar",
+      "atomic_pat"
     ]
   ],
   "precedences": [],
