@@ -331,10 +331,11 @@ module.exports = grammar({
         seq("|", $.ident, repeat(seq("|", $.ident)), "|", "_", "|"),
       ),
       // 4.2 Long Identifiers
-      long_ident : $ => seq($.ident, repeat1(seq(".", $.ident))),
+      long_ident : $ => prec(1, seq($.ident, repeat1(seq(".", $.ident)))),
       long_ident_or_op: $ => choice(
         seq($.long_ident, ".", $.long_ident_or_op),
-        $.ident_or_op),
+        $.ident_or_op
+      ),
 
       // 4.3 Constants
       konst: $ => choice(
