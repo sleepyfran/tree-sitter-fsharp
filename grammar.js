@@ -1,4 +1,5 @@
 const precedence = {
+  PREFIX_OP: 5,
   TYPE: 4,
   CAST: 2,
   LAZY: 1,
@@ -48,7 +49,7 @@ module.exports = grammar({
     conflicts: $ => [
       [$._quote_op_left, $.symbolic_op],
       [$._quote_op_right, $.symbolic_op],
-      [$.expr]
+      [$.expr],
     ],
     /**
      * an array of token names which can be returned by an external scanner. External scanners allow you to write custom C code which runs during the lexing process in order to handle lexical rules (e.g. Python’s indentation tokens) that cannot be described by regular expressions.
@@ -348,10 +349,13 @@ module.exports = grammar({
       // 4.4 Operators and Precedence
       // 4.4.1 Categorization of Symbolic Operators
       infix_or_prefix_op: $ => prec.left(choice('+', '-', '+.', '-.', '%', '&', '&&')),
-      prefix_op: $ => choice(
-        $.infix_or_prefix_op, /~+/, 
-        // !OP except !=
-        /![!%&*+-./<>@^|~?][!%&*+-./<=>@^|~?]*/
+      prefix_op: $ => prec.left(
+        precedence.PREFIX_OP,
+        choice(
+          $.infix_or_prefix_op, /~+/,
+          // !OP except !=
+          /![!%&*+-./<>@^|~?][!%&*+-./<=>@^|~?]*/
+        )
       ),
       infix_op: $ => choice(
         $.infix_or_prefix_op,

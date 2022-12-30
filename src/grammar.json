@@ -2371,21 +2371,25 @@
       }
     },
     "prefix_op": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "infix_or_prefix_op"
-        },
-        {
-          "type": "PATTERN",
-          "value": "~+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "![!%&*+-./<>@^|~?][!%&*+-./<=>@^|~?]*"
-        }
-      ]
+      "type": "PREC_LEFT",
+      "value": 5,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "infix_or_prefix_op"
+          },
+          {
+            "type": "PATTERN",
+            "value": "~+"
+          },
+          {
+            "type": "PATTERN",
+            "value": "![!%&*+-./<>@^|~?][!%&*+-./<=>@^|~?]*"
+          }
+        ]
+      }
     },
     "infix_op": {
       "type": "CHOICE",
