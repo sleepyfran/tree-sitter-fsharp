@@ -52,6 +52,7 @@ module.exports = grammar({
       [$._quote_op_right, $.symbolic_op],
       [$.expr],
       [$.pat],
+      [$.record_pat],
     ],
     /**
      * an array of token names which can be returned by an external scanner. External scanners allow you to write custom C code which runs during the lexing process in order to handle lexical rules (e.g. Python’s indentation tokens) that cannot be described by regular expressions.

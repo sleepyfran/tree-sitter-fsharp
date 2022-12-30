@@ -6089,6 +6089,9 @@
     ],
     [
       "pat"
+    ],
+    [
+      "record_pat"
     ]
   ],
   "precedences": [],
