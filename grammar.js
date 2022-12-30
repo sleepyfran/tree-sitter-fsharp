@@ -1,4 +1,5 @@
 const precedence = {
+  TYPE: 4,
   LAZY: 3,
   CAST: 2,
   ASSERT: 1,
@@ -371,7 +372,7 @@ module.exports = grammar({
 
       // TODO 4.4.2 Precedence of Symbolic Operators and Pattern/Expression Constructs
       // 5. Types and Type Constraints
-      type: $ => choice(
+      type: $ => prec.left(precedence.TYPE, choice(
         seq('(', $.type, ')'),
         seq($.type, '->', $.type),
         seq($.type, repeat1(seq('*', $.type))),
@@ -383,7 +384,8 @@ module.exports = grammar({
         seq($.type, '[', repeat(','), ']'),
         seq($.type, $.typar_defns),
         seq($.typar, ':>', $.type),
-        seq('#', $.type)),
+        seq('#', $.type)
+      )),
 
       type_args: $ => seq($.type_arg, repeat(seq(',', $.type_arg))),
       type_arg: $ => choice(
