@@ -48,6 +48,7 @@ module.exports = grammar({
     conflicts: $ => [
       [$._quote_op_left, $.symbolic_op],
       [$._quote_op_right, $.symbolic_op],
+      [$.expr]
     ],
     /**
      * an array of token names which can be returned by an external scanner. External scanners allow you to write custom C code which runs during the lexing process in order to handle lexical rules (e.g. Python’s indentation tokens) that cannot be described by regular expressions.
@@ -525,7 +526,8 @@ module.exports = grammar({
         //weakly typed expression splice
         prec.left(seq('%%', $.expr)),
         //static member invocation
-        seq('(', $.static_typars, ':', '(', $.member_sig, ')', $.expr, ')')),
+        seq('(', $.static_typars, ':', '(', $.member_sig, ')', $.expr, ')')
+      ),
       _expr_list: $ => seq($.expr, repeat(seq(choice(';', '\n'), $.expr))),
       _exprs: $ => seq($.expr, repeat(seq(',', $.expr))), // XXX not used?
       expr_or_range_expr: $ => choice(
